@@ -70,7 +70,7 @@ const App = new Vue({
             const list = this.characters = LIST // Foi adicionado o 'LIST' para que a página sempre seja atualizada após execução.
 
             const result = list.filter(item => {
-                return item.nome === this.searchName
+                return item.nome === this.searchName.trim()
             })
 
 
