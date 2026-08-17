@@ -27,7 +27,7 @@ const LIST = [
     {
         id: 6,
         nome: 'Chewbacca',
-        avatar: 'images/Chewbacca.png'
+        avatar: 'images/chewbacca.png'
     },
     {
         id: 7,
