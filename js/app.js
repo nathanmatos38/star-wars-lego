@@ -36,7 +36,7 @@ const LIST = [
     },
     {
         id: 8,
-        nome: 'C3p0',
+        nome: 'C3pO',
         avatar: 'images/c3po.png'
     }
 ]
@@ -70,7 +70,7 @@ const App = new Vue({
             const list = this.characters = LIST // Foi adicionado o 'LIST' para que a página sempre seja atualizada após execução.
 
             const result = list.filter(item => {
-                return item.nome.toLocaleLowerCase() === this.searchName.trim().toLocaleLowerCase()
+                return item.nome.toLowerCase() === this.searchName.trim().toLowerCase()
             })
 
 
