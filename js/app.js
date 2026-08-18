@@ -46,6 +46,7 @@ const App = new Vue({
     data: {
         title: 'Star Wars Lego',
         characters: LIST,
+        availableCharacters: [...LIST],
         searchName: ''
     },
     methods: {
@@ -53,13 +54,11 @@ const App = new Vue({
            alert(`O personagem ${userName} recebeu um like!`) 
         },
         remove(id) {  //Filtro de exlusão pelo ID.
-            const list = this.characters
-
-             const result = list.filter(item => {
+            this.availableCharacters = this.availableCharacters.filter(item => {
                 return item.id !== id
             })
-
-            this.characters = result
+            
+            this.characters = this.availableCharacters
         },
         search() {//Função criada para que se o campo de buscar não for preenchido e se digitar algo não relacionado aos personagens.
 
@@ -67,7 +66,7 @@ const App = new Vue({
                 return alert('O campo de busca é obrigatório!')
             }
 
-            const list = this.characters = LIST // Foi adicionado o 'LIST' para que a página sempre seja atualizada após execução.
+            const list = this.availableCharacters
 
             const result = list.filter(item => {
                 return item.nome.toLowerCase() === this.searchName.trim().toLowerCase()

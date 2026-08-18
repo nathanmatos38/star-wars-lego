@@ -311,7 +311,7 @@ A suíte de testes foi composta por **29 casos de teste**, distribuídos em seis
 
 ### 📝 Conclusão da execução
 
-A execução da baseline apresentou **21 casos aprovados e 8 casos com falha**.
+A execução da baseline apresentou **22 casos aprovados e 7 casos com falha**.
 
 As falhas identificadas estão relacionadas principalmente às funcionalidades de:
 
