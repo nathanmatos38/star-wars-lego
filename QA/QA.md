@@ -581,20 +581,21 @@ A mesma suíte contendo **29 casos de teste** foi executada novamente, permitind
 
 ### Resultado comparativo
 
-**Resultado	Baseline	Versão final**
-  PASS	      22	         29     
-  FAIL	      7	             0      
-  BLOCK	      0	             0      
-  Total	      29	         9      
+| Resultado | Baseline | Versão final |
+| --------- | -------- | ------------ |
+| PASS      | 22       | 29           |
+| FAIL      | 7        | 0            |
+| BLOCK     | 0        | 0            |
+| Total     | 29       | 29           |
 
-Na baseline, foram obtidos **22 PASS, 7 FAIL e 0 BLOCK.** Após a implementação das correções, os mesmos 29 casos de teste foram executados novamente, resultando em **29 PASS, 0 FAIL e 0 BLOCK.**
+Na baseline, foram obtidos **22 PASS, 7 FAIL e 0 BLOCK**. Após a implementação das correções, os mesmos 29 casos de teste foram executados novamente, resultando em **29 PASS, 0 FAIL e 0 BLOCK**.
 
 Todos os casos anteriormente classificados como FAIL foram retestados e apresentaram o comportamento esperado na versão corrigida.
 
 ### Status dos bugs
 
-| Bug     | Descrição                                              | Status      |
-| ------- | ------------------------------------------------------ | ----------- |
+| Bug     | Descrição                                              | Status       |
+| ------- | ------------------------------------------------------ | ------------ |
 | BUG-001 | Imagem do Chewbacca não carregada                      | ✅ CORRIGIDO |
 | BUG-002 | Busca sensível a maiúsculas e minúsculas               | ✅ CORRIGIDO |
 | BUG-003 | Exclusão não persistente durante a sessão              | ✅ CORRIGIDO |
@@ -603,18 +604,18 @@ Todos os casos anteriormente classificados como FAIL foram retestados e apresent
 
 ### Resultado da validação final
 
-✅ 29 testes executados
-✅ 29 PASS
-✅ 0 FAIL
-✅ 0 BLOCK
-✅ Todos os 7 casos que apresentavam FAIL na baseline foram aprovados na versão final.
-✅ BUG-001 corrigido e retestado.
-✅ BUG-002 corrigido e retestado.
-✅ BUG-003 corrigido e retestado.
-✅ BUG-004 corrigido e retestado.
-✅ BUG-005 identificado durante o ciclo de correção, corrigido e retestado.
-✅ Versão publicada validada após as alterações.
-✅ Funcionalidades existentes preservadas após as correções.
+- ✅ **29 testes executados**
+- ✅ **29 PASS**
+- ✅ **0 FAIL**
+- ✅ **0 BLOCK**
+- ✅ **Todos os 7 casos que apresentavam FAIL na baseline foram aprovados na versão final.**
+- ✅ **BUG-001 corrigido e retestado.**
+- ✅ **BUG-002 corrigido e retestado.**
+- ✅ **BUG-003 corrigido e retestado.**
+- ✅ **BUG-004 corrigido e retestado.**
+- ✅ **BUG-005 identificado durante o ciclo de correção, corrigido e retestado.**
+- ✅ **Versão publicada validada após as alterações.**
+- ✅ **Funcionalidades existentes preservadas após as correções.**
 
 ### Evolução da qualidade
 
