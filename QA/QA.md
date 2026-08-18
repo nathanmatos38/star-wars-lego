@@ -408,3 +408,244 @@ Evidência do personagem após a exclusão e posterior comportamento identificad
 A evidência demonstra que, ao realizar uma busca contendo espaço em branco no início da entrada, o sistema retorna "Nenhum registro encontrado", apesar de existir um personagem correspondente.
 
 ![BUG-004 — Busca com espaços](evidencias/BUG-004-espacos.png.png)
+
+---
+
+## 🔧 9. Correções e Retestes
+
+Após a identificação dos quatro bugs presentes na baseline, foram realizadas as respectivas correções na aplicação. Cada alteração foi seguida por retestes específicos para validar o comportamento esperado e verificar se a correção solucionou a falha identificada.
+
+### BUG-001 — Correção da imagem do Chewbacca
+
+**Causa:**
+A referência da imagem do personagem no código utilizava `Chewbacca.png`, enquanto o arquivo armazenado no diretório `images` estava nomeado como `chewbacca.png`. No ambiente local, a aplicação funcionava normalmente devido ao comportamento case-insensitive do sistema de arquivos. Entretanto, no ambiente publicado, a diferença entre letras maiúsculas e minúsculas fez com que a imagem não fosse localizada.
+
+**Correção aplicada:**
+A referência do arquivo foi ajustada no `app.js`, alterando:
+
+```javascript
+avatar: 'images/Chewbacca.png'
+```
+
+para:
+
+```javascript
+avatar: 'images/chewbacca.png'
+```
+
+A alteração foi realizada para que a referência no código corresponda exatamente ao nome do arquivo armazenado no projeto.
+
+**Reteste:**
+Após a correção, a aplicação foi executada novamente e a imagem do personagem Chewbacca foi verificada.
+
+**Resultado:**
+✅ **PASS — A imagem do Chewbacca é carregada corretamente após a correção.**
+
+**Status do Bug:**
+✅ **CORRIGIDO**
+
+---
+
+### BUG-002 — Correção da busca case-insensitive
+
+**Causa:**
+A comparação da busca era realizada de forma case-sensitive, fazendo com que diferenças entre letras maiúsculas e minúsculas interferissem no resultado da pesquisa. Dessa forma, entradas como `Luke Skywalker`, `LUKE SKYWALKER` e `luke skywalker` eram tratadas como valores diferentes.
+
+**Correção aplicada:**
+A lógica de comparação da busca foi corrigida no `app.js`, alterando:
+
+```javascript
+return item.nome === this.searchName.trim()
+```
+
+para:
+
+```javascript
+return item.nome.toLowerCase() === this.searchName.trim().toLowerCase()
+```
+
+A alteração foi realizada para normalizar tanto o nome armazenado quanto a entrada fornecida pelo usuário para letras minúsculas antes da comparação, tornando a busca independente de diferenças entre letras maiúsculas e minúsculas.
+
+**Reteste:**
+Após a correção, a aplicação foi executada novamente nos ambientes local e publicado. Foram realizados testes utilizando diferentes combinações de letras maiúsculas, minúsculas e ambas misturadas, incluindo entradas com espaços no início e no final. Todos os cenários retornaram o personagem esperado.
+
+**Resultado:**
+✅ **PASS — A busca não é afetada por diferenças entre letras maiúsculas e minúsculas.**
+
+**Status do Bug:**
+✅ **CORRIGIDO**
+
+---
+
+### BUG-003 — Correção da exclusão do personagem
+
+**Causa:**
+Durante a execução da busca, o código atribuía novamente a lista original `LIST` à variável `this.characters`, fazendo com que personagens excluídos durante a sessão voltassem a aparecer nos resultados da pesquisa.
+
+**Correção aplicada:**
+O código da aplicação foi alterado de:
+
+```javascript
+const list = this.characters = LIST
+```
+
+para:
+
+```javascript
+const list = this.characters
+```
+
+A alteração garante que a pesquisa utilize a lista atual de personagens, respeitando as exclusões realizadas durante a sessão.
+
+**Reteste:**
+Foram realizados testes com a exclusão de múltiplos personagens, incluindo cenários com três e quatro personagens excluídos. Após cada exclusão, foi realizada uma pesquisa pelo personagem removido, validando que ele não fosse exibido novamente.
+
+Também foi validado o comportamento após a atualização da página, confirmando que os personagens retornam à lista original conforme o comportamento esperado da aplicação.
+
+**Resultado:**
+✅ **PASS — A aplicação não exibe, durante a mesma sessão, personagens que foram excluídos quando pesquisados posteriormente.**
+
+**Status do Bug:**
+✅ **CORRIGIDO**
+
+---
+
+### BUG-004 — Correção da busca com espaços no início e no final
+
+**Causa:**
+A comparação da busca era realizada diretamente com o valor informado pelo usuário, sem remover os espaços em branco presentes no início ou no final da entrada.
+
+**Correção aplicada:**
+O código da aplicação foi corrigido de:
+
+```javascript
+const result = list.filter(item => {
+    return item.nome === this.searchName
+})
+```
+
+para:
+
+```javascript
+const result = list.filter(item => {
+    return item.nome === this.searchName.trim()
+})
+```
+
+A alteração foi realizada para remover espaços em branco no início e no final da entrada antes da comparação.
+
+**Reteste:**
+Foram realizados testes com espaços no início, no final e em ambas as extremidades da entrada. Todos os cenários retornaram o personagem esperado.
+
+**Resultado:**
+✅ **PASS — A aplicação reconhece o personagem mesmo quando a entrada possui espaços no início e/ou no final.**
+
+**Status do Bug:**
+✅ **CORRIGIDO**
+
+---
+
+## 🔄 10. Regressões Identificadas Durante as Correções
+
+Durante o ciclo de correção e reteste do BUG-003, foi identificada uma regressão que não fazia parte da baseline original.
+
+### BUG-005 — Pesquisa consecutiva após alteração do estado da lista
+
+**Origem:**
+Regressão identificada durante o reteste do BUG-003.
+
+**Causa:**
+Após a alteração da busca para utilizar `this.characters`, o resultado da primeira pesquisa substituía o conteúdo de `characters`. Dessa forma, as pesquisas seguintes eram realizadas somente sobre o resultado da pesquisa anterior.
+
+**Correção aplicada:**
+Foi criada a propriedade `availableCharacters` para representar os personagens disponíveis durante a sessão. A pesquisa passou a consultar `availableCharacters`, enquanto `characters` permanece responsável pela exibição dos resultados.
+
+**Reteste:**
+Foram realizadas pesquisas consecutivas por diferentes personagens sem atualização da página, além de testes combinando exclusão e pesquisa. Também foi validado o comportamento após F5.
+
+**Resultado:**
+✅ **PASS — Pesquisas consecutivas retornam corretamente os personagens que não foram excluídos, sem permitir que personagens excluídos sejam encontrados.**
+
+**Status do Bug:**
+✅ **CORRIGIDO**
+
+> **Observação:** O BUG-005 não fazia parte dos defeitos identificados na baseline. A falha foi introduzida durante o processo de correção do BUG-003, sendo identificada e corrigida durante os testes de reteste e regressão.
+
+---
+
+## 📊 11. Resultado Final
+
+Após a implementação das correções, foram realizados os respectivos retestes dos bugs identificados e uma nova execução completa da suíte de testes utilizada na baseline.
+
+A mesma suíte contendo **29 casos de teste** foi executada novamente, permitindo comparar diretamente os resultados da versão inicial com a versão corrigida.
+
+### Resultado comparativo
+
+**Resultado	Baseline	Versão final**
+  PASS	      22	         29     
+  FAIL	      7	             0      
+  BLOCK	      0	             0      
+  Total	      29	         9      
+
+Na baseline, foram obtidos **22 PASS, 7 FAIL e 0 BLOCK.** Após a implementação das correções, os mesmos 29 casos de teste foram executados novamente, resultando em **29 PASS, 0 FAIL e 0 BLOCK.**
+
+Todos os casos anteriormente classificados como FAIL foram retestados e apresentaram o comportamento esperado na versão corrigida.
+
+### Status dos bugs
+
+| Bug     | Descrição                                              | Status      |
+| ------- | ------------------------------------------------------ | ----------- |
+| BUG-001 | Imagem do Chewbacca não carregada                      | ✅ CORRIGIDO |
+| BUG-002 | Busca sensível a maiúsculas e minúsculas               | ✅ CORRIGIDO |
+| BUG-003 | Exclusão não persistente durante a sessão              | ✅ CORRIGIDO |
+| BUG-004 | Busca não ignora espaços no início/final               | ✅ CORRIGIDO |
+| BUG-005 | Pesquisa consecutiva após alteração do estado da lista | ✅ CORRIGIDO |
+
+### Resultado da validação final
+
+✅ 29 testes executados
+✅ 29 PASS
+✅ 0 FAIL
+✅ 0 BLOCK
+✅ Todos os 7 casos que apresentavam FAIL na baseline foram aprovados na versão final.
+✅ BUG-001 corrigido e retestado.
+✅ BUG-002 corrigido e retestado.
+✅ BUG-003 corrigido e retestado.
+✅ BUG-004 corrigido e retestado.
+✅ BUG-005 identificado durante o ciclo de correção, corrigido e retestado.
+✅ Versão publicada validada após as alterações.
+✅ Funcionalidades existentes preservadas após as correções.
+
+### Evolução da qualidade
+
+A execução da suíte demonstra a evolução da aplicação entre a baseline e a versão final:
+
+**Baseline**
+
+22 PASS | 7 FAIL | 0 BLOCK
+
+**⬇️ Correções + Retestes + Regressão**
+
+**Versão final**
+
+29 PASS | 0 FAIL | 0 BLOCK
+
+**Resultado final da suíte: 100% dos casos de teste aprovados.**
+---
+
+## 🏁 12. Conclusão
+
+A análise de qualidade foi realizada inicialmente sobre a versão publicada da aplicação, estabelecendo uma baseline antes da implementação das correções.
+
+Na baseline, foram executados **29 casos de teste**, sendo obtidos **22 PASS, 7 FAIL e 0 BLOCK.** Os resultados permitiram identificar quatro bugs na versão inicialmente avaliada.
+
+Após a implementação das correções, foram realizados os respectivos retestes. Durante o processo de correção do BUG-003, uma regressão relacionada à realização de pesquisas consecutivas foi identificada, documentada como BUG-005, corrigida e posteriormente retestada.
+
+Ao final do ciclo de correção, a mesma suíte de **29 casos de teste utilizada na baseline foi executada novamente**, resultando em **29 PASS, 0 FAIL e 0 BLOCK.**
+
+A versão corrigida também foi validada no ambiente publicado, confirmando o funcionamento das alterações implementadas e a preservação das demais funcionalidades da aplicação.
+
+Dessa forma, todos os defeitos identificados durante o ciclo de validação foram corrigidos e os comportamentos esperados foram validados.
+
+**Resultado final da validação:**
+**✅ APROVADO — 29/29 casos de teste PASS (100%).**
