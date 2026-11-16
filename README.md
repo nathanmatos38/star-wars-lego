@@ -4,7 +4,7 @@ Aplicação web desenvolvida com **HTML, CSS, JavaScript e Vue.js**, contendo um
 
 O desenvolvimento da aplicação foi realizado **junto com o professor durante um curso de JavaScript na plataforma Udemy**.
 
-Posteriormente, o projeto foi utilizado como base para a aplicação prática de conhecimentos de **Quality Assurance (QA)**, realizando de forma independente todo o processo de análise, planejamento, execução e documentação dos testes.
+Posteriormente, o projeto foi utilizado como base para a aplicação prática de conhecimentos de **Quality Assurance (QA)**, realizando de forma independente todo o processo de análise, planejamento, execução,documentação e automação dos testes.
 
 ---
 
@@ -44,6 +44,36 @@ Durante a análise foram identificados **4 bugs na baseline**. Após as correç�
 * ⚠️ Validação de campo de busca obrigatório
 
 ---
+
+## 🧪 Automação de Testes com Cypress
+
+Além dos testes manuais, o projeto também conta com uma suíte de testes automatizados E2E desenvolvida com **Cypress e JavaScript**.
+
+A automação foi construída com base nos casos de teste documentados no arquivo `QA.md`, permitindo validar os principais fluxos e comportamentos da aplicação.
+
+### Cenários automatizados
+
+- **G1 — Happy Path:** validação da busca dos personagens.
+- **G2 — Variações de Entrada:** validação de diferentes formatos de entrada.
+- **G3 — Entradas Inválidas/Sem Correspondência:** validação de pesquisas sem resultados.
+- **G4 — Exclusão:** validação da remoção de personagens.
+- **G5 — Função Curtir:** validação da funcionalidade de curtidas.
+- **G6 — Responsividade:** validação do comportamento da aplicação em diferentes resoluções de tela.
+
+### Resultado da automação
+
+- Total de testes automatizados: **29**
+- Aprovados: **29 PASS**
+- Reprovados: **0 FAIL**
+
+<escape>**Resultado final: 100% dos testes automatizados aprovados!**</escape>
+
+### Tecnologias utilizadas
+
+- JavaScript
+- Cypress
+- Node.js
+- Git e GitHub
 
 ## 🧪 Processo de QA
 

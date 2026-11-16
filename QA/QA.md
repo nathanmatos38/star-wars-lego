@@ -648,5 +648,63 @@ A versão corrigida também foi validada no ambiente publicado, confirmando o fu
 
 Dessa forma, todos os defeitos identificados durante o ciclo de validação foram corrigidos e os comportamentos esperados foram validados.
 
+## 🤖 Automação de Testes E2E — Cypress
+
+Após a conclusão e validação dos testes manuais, foi desenvolvida uma suíte de testes automatizados utilizando **Cypress e JavaScript**.
+
+O objetivo foi automatizar os cenários previamente documentados, validar os principais comportamentos da aplicação e ampliar a cobertura dos testes de regressão.
+
+### ⚙️ Configuração do ambiente
+
+- **Ferramenta:** Cypress 16.3.0
+- **Linguagem:** JavaScript
+- **Ambiente de execução:** Node.js
+- **Tipo de teste:** End-to-End (E2E)
+- **Arquivo de testes:** `cypress/e2e/spec.cy.js`
+
+### 📋 Cenários automatizados
+
+| Grupo | Cenários | Testes |
+|---|---|---:|
+| G1 — Happy Path | Busca dos personagens | 8 |
+| G2 — Variações de Entrada | Diferentes formatos de pesquisa | 6 |
+| G3 — Entradas Inválidas/Sem Correspondência | Pesquisas sem resultados | 3 |
+| G4 — Exclusão | Remoção de personagens | 3 |
+| G5 — Função Curtir | Curtidas nos personagens | 3 |
+| G6 — Responsividade | Diferentes resoluções de tela | 6 |
+| **Total** | | **29** |
+
+### ▶️ Execução dos testes
+
+Para executar a suíte de testes pelo terminal:
+
+```bash
+npx cypress run
+```
+
+Para abrir a interface do Cypress:
+
+```bash
+npx cypress open
+```
+
+### 📊 Resultado final da automação
+
+| Status | Quantidade |
+|---|---:|
+| PASS | 29 |
+| FAIL | 0 |
+| **Total** | **29** |
+
+<escape>**Resultado: 29/29 testes aprovados (100%).**</escape>
+
+Todos os cenários automatizados foram executados e validados com sucesso.
+
+### 📌 Considerações finais
+
+A automação foi desenvolvida com base nos casos de teste manuais previamente documentados, permitindo reaproveitar os cenários definidos durante a etapa de planejamento e validação manual.
+
+Com essa evolução, o projeto passou a contemplar testes manuais e automatizados, fortalecendo a validação das funcionalidades, a identificação de possíveis regressões e a documentação das atividades de QA.
+
 **Resultado final da validação:**
 **✅ APROVADO — 29/29 casos de teste PASS (100%).**
