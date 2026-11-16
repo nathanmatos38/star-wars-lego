@@ -1,0 +1,23 @@
+{
+  "name": "star-wars-lego",
+  "version": "1.0.0",
+  "description": "Aplicação web desenvolvida com **HTML, CSS, JavaScript e Vue.js**, contendo uma lista de personagens do universo Star Wars com funcionalidades de busca, exclusão e interação.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathanmatos38/star-wars-lego.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nathanmatos38/star-wars-lego/issues"
+  },
+  "homepage": "https://github.com/nathanmatos38/star-wars-lego#readme",
+  "devDependencies": {
+    "cypress": "^16.3.0"
+  }
+}
